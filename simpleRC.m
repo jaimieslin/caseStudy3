@@ -22,8 +22,8 @@ figure();
 hold on;
 plot(Vin);
 plot(Vc);
-xaxislabel("Time (s)")
-yaxislabel("Voltage (V)");
+xlabel("Time (s)")
+ylabel("Voltage (V)");
 hold off;
 
 
