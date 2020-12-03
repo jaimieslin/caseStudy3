@@ -1,38 +1,40 @@
 
-%%
-
-h = 3*10^-4; %interval of discrete time steps
+%% Setup and compute model
+% constants
 R = 1000; %resitance
 C = 1*10^-6; %capacitance
-h_ = 8*10^-4;
-
 length = 5.5*10^-3;
+
+%interval of discrete time steps
+h = 3*10^-4; 
+h_ = 8*10^-4; 
+
 steps = fix(length/h);
 steps_ = fix(length/h_);
 
 Vin = ones(1, steps);
 
+% calculate perdiction with time steps of h
 Vc = zeros(1, steps);
-
 for i = [1:(steps-1)]
     Vc(i+1) = (1-h/(R*C))*Vc(i) + (h/(R*C))*Vin(i);
 end
 
+% calculate perdiction with time steps of h_
 Vc_ = zeros(1, steps_);
-
 for i =[1:(steps_-1)]
     Vc_(i+1) = (1-h_/(R*C))*Vc_(i) + (h_/(R*C))*Vin(i);
 end
 
-
+%% Plot model
 figure();
 hold on;
 %plot the input voltage
-plot([0:steps-1]*h, Vin); 
+plot([0:steps-1]*h, Vin,  'linewidth', 2); 
 %plot the voltage across the capacitor with time steps of h
-plot([0:steps-1]*h, Vc); 
+plot([0:steps-1]*h, Vc, 'linewidth', 2); 
 %plot the voltage across the capacitor with time steps of h'
-plot([0:steps_-1]*h_, Vc_); 
+plot([0:steps_-1]*h_, Vc_, 'linewidth', 2); 
 %plot the voltage across capacitor with the continous function
 fplot(@(x) (1-exp(-x/(R*C))),[0 length]); 
 
