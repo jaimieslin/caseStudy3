@@ -1,44 +1,44 @@
+
 %%
 
-h = 1*10^-5;
-R = 1000;
-C = 1*10^-6;
+h = 3*10^-4; %interval of discrete time steps
+R = 1000; %resitance
+C = 1*10^-6; %capacitance
+h_ = 8*10^-4;
 
 length = 5.5*10^-3;
-steps = length/h;
+steps = fix(length/h);
+steps_ = fix(length/h_);
 
-Vc = zeros(1, steps);
 Vin = ones(1, steps);
 
-for i = 1:549;
+Vc = zeros(1, steps);
+
+for i = [1:(steps-1)]
     Vc(i+1) = (1-h/(R*C))*Vc(i) + (h/(R*C))*Vin(i);
 end
 
+Vc_ = zeros(1, steps_);
 
-
-h_ = 8*10^-4;
-
-steps_ = length/h_;
-
-Vc_ = zeros(1, steps);
-
-for i = 1:549
+for i =[1:(steps_-1)]
     Vc_(i+1) = (1-h_/(R*C))*Vc_(i) + (h_/(R*C))*Vin(i);
 end
-
-x = 0:h:(length-h);
-
-
 
 
 figure();
 hold on;
-plot(x, Vin);
-plot(x, Vc);
-plot(x, Vc_);
+%plot the input voltage
+plot([0:steps-1]*h, Vin); 
+%plot the voltage across the capacitor with time steps of h
+plot([0:steps-1]*h, Vc); 
+%plot the voltage across the capacitor with time steps of h'
+plot([0:steps_-1]*h_, Vc_); 
+%plot the voltage across capacitor with the continous function
+fplot(@(x) (1-exp(-x/(R*C))),[0 length]); 
+
+set(gca, 'linewidth', 2);
+set(gca, 'fontsize', 14);
 xlabel("Time (s)")
 ylabel("Voltage (V)");
-legend("V_{in}", "V_c", "V_{c}adj");
+legend("V_{in}", "V_{out}", "V'_{out}", "V_c(t)");
 hold off;
-
-
