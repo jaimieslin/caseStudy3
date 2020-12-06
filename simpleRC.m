@@ -35,7 +35,9 @@ plot([0:steps-1]*h, Vc, 'linewidth', 2);
 %plot the voltage across the capacitor with time steps of h'
 plot([0:steps_-1]*h_, Vc_, 'linewidth', 2); 
 %plot the voltage across capacitor with the continous function
-fplot(@(t) (1-exp(-t/(R*C))),[0 length], 'linewidth', 2); 
+sym t;
+V_out(t) = (1-exp(-t/(R*C)));
+fplot(@(t) V_out(t), [0 length], 'linewidth', 2); 
 
 set(gca, 'linewidth', 2);
 set(gca, 'fontsize', 14);
@@ -43,8 +45,3 @@ xlabel("Time (s)")
 ylabel("Voltage (V)");
 legend("V_{in}", "V_{out}", "V'_{out}", "V_c(t)");
 hold off;
-
-% % theoretical function
-% function theroteical = V_out(t)
-%     theroteical = (1-exp(-t/(R*C))); 
-% end
