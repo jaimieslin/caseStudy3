@@ -9,8 +9,8 @@ range = 5.5*10^-3;
 h = 3*10^-4; 
 h_ = 8*10^-4; 
 
-steps = ceil(range/h);
-steps_ = ceil(range/h_);
+steps = round(range/h);
+steps_ = round(range/h_);
 
 Vin = ones(1, steps);
 Vin_ = ones(1, steps_);
