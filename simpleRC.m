@@ -2,14 +2,14 @@
 % constants
 R = 1000; %resitance
 C = 1*10^-6; %capacitance
-length = 5.5*10^-3;
+tEnd = 5.5*10^-3;
 
 %interval of discrete time steps
 h = 3*10^-4; 
 h_ = 8*10^-4; 
 
-steps = fix(length/h);
-steps_ = fix(length/h_);
+steps = fix(tEnd/h);
+steps_ = fix(tEnd/h_);
 
 Vin = ones(1, steps);
 
@@ -35,9 +35,10 @@ plot([0:steps-1]*h, Vc, 'linewidth', 2);
 %plot the voltage across the capacitor with time steps of h'
 plot([0:steps_-1]*h_, Vc_, 'linewidth', 2); 
 %plot the voltage across capacitor with the continous function
-sym t;
+
+syms t;
 V_out(t) = (1-exp(-t/(R*C)));
-fplot(@(t) V_out(t), [0 length], 'linewidth', 2); 
+fplot(@(t) V_out(t), [0 tEnd], 'linewidth', 2); 
 
 set(gca, 'linewidth', 2);
 set(gca, 'fontsize', 14);
