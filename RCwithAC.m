@@ -18,7 +18,7 @@ Vin = sin(2*pi*f*t);
 Vc_out = getVoltage(R, C, h, Vin);
 Vr_out = Vin - Vc_out;
 
-playSound(Vin, (1/h));weait
+playSound(Vin, (1/h));
 playSound(Vc_out, (1/h));
 playSound(Vr_out, (1/h));
 
