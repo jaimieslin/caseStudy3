@@ -10,7 +10,7 @@ h = 2.61*10^-6; % sampling interval
 figure('position', [0, 0, 1000, 1000]);
 
 %frequency in hertz (possible range: 10 Hz - 10,000 Hz)
-freq = [10 100 1000 10000];
+freq = [10 100 1000 10000];...[10 3330 6660 10000];
 
 %calculate and plot model for all frequencies in freq
 for i = 1:length(freq) 
@@ -24,11 +24,6 @@ steps = fix(2*period/h);
 Vin = sin(2*pi*f*t);
 Vc_out = circuitA(Vin, h, R, C);
 Vr_out = Vin - Vc_out;
-
-% play model
-% playSound(Vin, (1/h));
-% playSound(Vc_out, (1/h));
-% playSound(Vr_out, (1/h));
 
 % plot model
 subplot(2, 2, i);
@@ -44,6 +39,14 @@ ylabel("Voltage (V)");
 legend("V_{in}", "VC_{out}", "VR_{out}");
 title(['Voltage over time for ' num2str(f) ' Hz input']);
 hold off;
+
+% play model
+% w = waitforbuttonpress;
+% playSound(Vin, (1/h));
+% w = waitforbuttonpress;
+% playSound(Vc_out, (1/h));
+% w = waitforbuttonpress;
+% playSound(Vr_out, (1/h));
 end
 %% Setup, compute, and plot transfer functions H(f)
 freq = 10:10:10000; % vector of 1000 frequency values spanning (10 - 10k) hz
@@ -54,7 +57,7 @@ Hr = zeros(1, length(freq));
 % calculate Hc and Hr
 for i = 1:length(freq)
     period = 1/(freq(i));
-    t = 0:h:10*period;
+    t = 0*period:h:period;
     vin = sin(2*pi*freq(i)*t);
     vc_out = circuitA(vin, h, R, C);
     vr_out = vin - vc_out;
@@ -65,10 +68,7 @@ end
 
 % plot the transfer functions H(f)
 figure();
-hold on;
-
-semilogy(freq, Hc, 'linewidth', 2);
-semilogy(freq, Hr, 'linewidth', 2);
+semilogy(freq, Hc, freq, Hr, 'linewidth', 2);
 
 set(gca, 'linewidth', 2);
 set(gca, 'fontsize', 14);
@@ -76,5 +76,3 @@ xlabel("Frequency (hz)")
 ylabel("H(f)");
 legend("H(f)_{c}", "H(f)_{r}");
 title ("Transfer function");
-
-hold off;
