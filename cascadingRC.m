@@ -70,10 +70,7 @@ end
 
 % plot the transfer functions H(f)
 figure();
-hold on;
-
-semilogy(freq, H_C, 'linewidth', 2);
-semilogy(freq, H_D, 'linewidth', 2);
+semilogy(freq, H_C, freq, H_D, 'linewidth', 2);
 
 set(gca, 'linewidth', 2);
 set(gca, 'fontsize', 14);
@@ -81,5 +78,3 @@ xlabel("Frequency (hz)")
 ylabel("H(f)");
 legend("H(f)_{C}", "H(f)_{D}");
 title ("Transfer functions for circuit C and D");
-
-hold off;
