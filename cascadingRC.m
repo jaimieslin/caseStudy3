@@ -1,57 +1,85 @@
-%% Solve the first circuit
-
+%% Set up and constants
+close all;
+%constants
 C1 = 1*10^-6;
 C2 = 1*10^-6;
 C3 = 1*10^-6;
 R1 = 1000;
 R2 = 1000;
 R4 = 1000;
-h = 2.61*10^-6; % sampling interval
+h = 2.61*10^-5; % sampling interval
 
-f = 500;
-period = 2*1/f;
-t = 0:h:(period-h);
-steps = fix(period/h); % number of time points of interest
+f = 50; % input frequency
+period = 1/f;
+t = 0:h:(2*period-h);
+steps = fix(2*period/h);
 
 Vin = sin(2*pi*f*t);
-Vc1 = zeros(1, steps);
-Vc3 = zeros(1, steps);
-i1 = zeros(1, steps);
-i2 = zeros(1, steps);
-i3 = zeros(1, steps);
-V1 = zeros(1, steps);
-Vout = zeros(1, steps);
 
-for i = 1:steps
+%% Circuit C
+Vout_C = circuitC(Vin, h, R2, R4, C1, C3);
 
-A1 = [1, -1, -1, 0, 0, 0;
-      0, R2, 0, 0, -1, 0;
-      0, 0, R4, 0, 0, -1;
-      0, 0, 0, 1, 0, 0;
-      0, 0, 0, 1, -1, 0;
-      0, 0, 0, 0, 1, -1];
-  
-  b = [0;
-       0;
-       0;
-       Vin(i);
-       Vc1(i);
-       Vc3(i)];
-  
-  x = linsolve(A1, b);
-  x(1) = i1(i);
-  x(2) = i2(i);
-  x(3) = i3(i);
-  x(5) = V1(i);
-  x(6) = Vout(i);
-  
- Vc1(i+1) = Vc1(i) + (h/C1)*(i1(i));
- Vc3(i+1) = Vc3(i) + (h/C3)*(i3(i));
-  
-  
+% plot model for circuit C
+figure();
+hold on;
+plot(t, Vin,  'linewidth', 2); 
+plot(t, Vout_C,  'linewidth', 2); 
+
+set(gca, 'linewidth', 2);
+set(gca, 'fontsize', 14);
+xlabel("Time (s)")
+ylabel("Voltage (V)");
+legend("V_{in}", "V_{out}");
+title({['Voltage over time for ' num2str(f) ' Hz input']; "Circuit C"});
+hold off;
+
+%% Circuit D
+Vout_D = circuitD(Vin, h, R1, R4, C2, C3);
+
+% plot model for circuit D
+figure();
+hold on;
+plot(t, Vin,  'linewidth', 2); 
+plot(t, Vout_D,  'linewidth', 2); 
+
+set(gca, 'linewidth', 2);
+set(gca, 'fontsize', 14);
+xlabel("Time (s)")
+ylabel("Voltage (V)");
+legend("V_{in}", "V_{out}");
+title({['Voltage over time for ' num2str(f) ' Hz input']; "Circuit D"});
+hold off;
+
+%% Setup, compute, and plot transfer functions H(f)
+freq = 10:10:10000; % vector of 1000 frequency values spanning (10 - 10k) hz
+% initialize H_C and H_D
+H_C = zeros(1, length(freq)); 
+H_D = zeros(1, length(freq));
+
+% calculate H_C and H_D
+for i = 1:length(freq)
+    period = 1/(freq(i));
+    t = 0:h:50*period;
+    vin = sin(2*pi*freq(i)*t);
+    vout_C = circuitC(vin, h, R2, R4, C1, C3);
+    vout_D = circuitD(vin, h, R1, R4, C2, C3);
+    
+    H_C(i) = max(vout_C)/max(vin);
+    H_D(i) = max(vout_D)/max(vin);
 end
 
+% plot the transfer functions H(f)
+figure();
+hold on;
 
-  
+semilogy(freq, H_C, 'linewidth', 2);
+semilogy(freq, H_D, 'linewidth', 2);
 
-  
+set(gca, 'linewidth', 2);
+set(gca, 'fontsize', 14);
+xlabel("Frequency (hz)")
+ylabel("H(f)");
+legend("H(f)_{C}", "H(f)_{D}");
+title ("Transfer functions for circuit C and D");
+
+hold off;

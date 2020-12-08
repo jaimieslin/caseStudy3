@@ -16,19 +16,19 @@ freq = [10 100 1000 10000];
 for i = 1:length(freq) 
 % define model constants
 f = freq(i);
-period = 2*1/f;
-t = 0:h:(period-h);
-steps = fix(period/h);
+period = 1/f;
+t = 0:h:(2*period-h);
+steps = fix(2*period/h);
 
 % define and calculate model functions
 Vin = sin(2*pi*f*t);
-Vc_out = getVoltage(R, C, h, Vin);
+Vc_out = circuitA(Vin, h, R, C);
 Vr_out = Vin - Vc_out;
 
 % play model
-playSound(Vin, (1/h));
-playSound(Vc_out, (1/h));
-playSound(Vr_out, (1/h));
+% playSound(Vin, (1/h));
+% playSound(Vc_out, (1/h));
+% playSound(Vr_out, (1/h));
 
 % plot model
 subplot(2, 2, i);
@@ -53,10 +53,10 @@ Hr = zeros(1, length(freq));
 
 % calculate Hc and Hr
 for i = 1:length(freq)
-    period = 2*1/(freq(i));
-    t = 0:h:20*(period-h);
+    period = 1/(freq(i));
+    t = 0:h:10*period;
     vin = sin(2*pi*freq(i)*t);
-    vc_out = getVoltage(R, C, h, vin);
+    vc_out = circuitA(vin, h, R, C);
     vr_out = vin - vc_out;
     
     Hc(i) = max(vc_out)/max(vin);
@@ -78,14 +78,3 @@ legend("H(f)_{c}", "H(f)_{r}");
 title ("Transfer function");
 
 hold off;
-
-%% Definition of function getVoltage 
-function V = getVoltage(R, C, h, Vin)
-
-steps = length(Vin);
-V = zeros(1, steps);
-for i = 1:(steps - 1)
-    V(i+1) = (1-h/(R*C))*V(i) + (h/(R*C))*Vin(i);
-end
-
-end
