@@ -17,11 +17,11 @@ Vin = ones(1, steps);
 Vin_ = ones(1, steps_);
 
 % calculate prediction with time steps of h
-Vc = getVoltage(R, C, h, Vin);
+Vc = circuitAB(R, C, h, Vin);
 
 
 % calculate prediction with time steps of h_
-Vc_ = getVoltage(R, C, h_, Vin_);
+Vc_ = circuitAB(R, C, h_, Vin_);
 
 %% Plot model
 figure();

@@ -14,7 +14,7 @@ t = 0:h:(range-h);
 steps = fix(range/h); % number of time points of interest
 
 Vin = sin(2*pi*f*t);
-Vc_out = circuitB(R, C, h, Vin);
+Vc_out = circuitAB(R, C, h, Vin);
 Vr_out = Vin - Vc_out;
 
 % playSound(Vin, (1/h));
@@ -45,7 +45,7 @@ for i = 1:length(freq)
     range = 2/(freq(i));
     t = 0:h:20*(range-h);
     vin = sin(2*pi*freq(i)*t);
-    vc_out = circuitB(R, C, h, vin);
+    vc_out = circuitAB(R, C, h, vin);
     vr_out = vin - vc_out;
     
     Hc(i) = max(vc_out)/max(vin);

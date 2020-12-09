@@ -4,7 +4,7 @@
 
 % R = resistance, C = capacitance, h = sampling interval, Vin = vector of
 % source voltage over time
-function Vout = circuitB(R, C, h, Vin)
+function Vout = circuitAB(R, C, h, Vin)
 
 steps = length(Vin(1, :)); % number of time points of interest
 Vout = zeros(1, steps); % A vector of the same size as Vin
