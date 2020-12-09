@@ -1,13 +1,16 @@
-function [Vout] = circuitA(Vin, h, R, C)
-% constants
-steps = length(Vin);
+%% Computes the voltage across a capacitor over time in a simple RC circuit 
+% "Simple RC Circuit" meaning one voltage source connected to a capacitor 
+% and a resistor in series, as in circuits A and B of the case study
 
-% initialize variables
-Vout = zeros(1, steps);
+% R = resistance, C = capacitance, h = sampling interval, Vin = vector of
+% source voltage over time
+function Vout = circuitB(R, C, h, Vin)
 
-% compute model
-for i = [1:(steps-1)]
-    Vout(i+1) = (1-h/(R*C))*Vout(i) + (h/(R*C))*Vin(i);
+steps = length(Vin(1, :)); % number of time points of interest
+Vout = zeros(1, steps); % A vector of the same size as Vin
+
+for i = 1:(steps - 1)
+    Vout(i+1) = (1-(h/(R*C)))*Vout(i) + (h/(R*C))*Vin(i); % Expression for Vc at time step i+1 in a simple RC circuit
 end
-end
 
+end
