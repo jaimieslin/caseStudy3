@@ -2,7 +2,7 @@ function [Vout] = circuitA(Vin, h, R, C)
 % constants
 steps = length(Vin);
 
-% initialize varibles
+% initialize variables
 Vout = zeros(1, steps);
 
 % compute model
