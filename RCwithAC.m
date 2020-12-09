@@ -9,9 +9,9 @@ h = 2.61*10^-6; % sampling interval
 figure('position', [0, 0, 1000, 1000]);
 for i = 1:4 %frequency in hertz (possible range: 10 Hz - 10,000 Hz)
 f = 10.^i;
-range = 2/f; % We calculate values of Vc and Vr for a quantity of time equal to 2 periods of the input sine wave
-t = 0:h:(range-h);
-steps = fix(range/h); % number of time points of interest
+period = 1/f; 
+t = 0:h:(2*period-h); % We calculate values of Vc and Vr for a quantity of time equal to 2 periods of the input sine wave
+steps = fix(2*period/h); % number of time points of interest
 
 Vin = sin(2*pi*f*t);
 Vc_out = circuitAB(R, C, h, Vin);
@@ -38,12 +38,17 @@ end
 %% 
 freq = 10:10:10000; % vector of 1000 frequency values spanning (10 - 10k) hz
 
+% We declare transfer functions H(f) for r and c of the same length as freq
 Hc = zeros(1, length(freq));
 Hr = zeros(1, length(freq));
 
 for i = 1:length(freq)
-    range = 2/(freq(i));
-    t = 0:h:20*(range-h);
+    period = 1/(freq(i));
+    
+    % To ensure stability of the waves used to compute transfer functions,
+    % we compute vin, vc, and vr for 6 periods of the input vin wave
+    t = 0:h:20*(6*period-h); 
+    
     vin = sin(2*pi*freq(i)*t);
     vc_out = circuitAB(R, C, h, vin);
     vr_out = vin - vc_out;
