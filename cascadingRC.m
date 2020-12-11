@@ -78,7 +78,7 @@ set(gca, 'linewidth', 2);
 set(gca, 'fontsize', 14);
 xlabel("Frequency (hz)")
 ylabel("H(f)");
-legend("H(f)_{C}", "H(f)_{D}");
+legend("Circuit C", "Circuit D");
 title ("Transfer functions for circuit C and D");
 
 exportgraphics(gca, "transferFuncCD.eps", "Resolution", 300);

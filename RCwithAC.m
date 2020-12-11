@@ -33,7 +33,7 @@ set(gca, 'linewidth', 2);
 set(gca, 'fontsize', 14);
 xlabel("Time (s)")
 ylabel("Voltage (V)");
-legend("V_{in}", "VC_{out}", "VR_{out}");
+legend("V_{in}", "Circuit A_{out}", "Circuit B_{out}");
 title(['Voltage over time for ' num2str(f) ' Hz input']);
 hold off;
 
@@ -74,6 +74,6 @@ set(gca, 'linewidth', 2);
 set(gca, 'fontsize', 14);
 xlabel("Frequency (hz)")
 ylabel("H(f)");
-legend("H(f)_{c}", "H(f)_{r}");
-title ("Transfer function");
+legend("Circuit A", "Circuit B");
+title ("Transfer functions for circuits A and B");
 exportgraphics(gca, "transferFuncAB.eps", "Resolution", 300);
