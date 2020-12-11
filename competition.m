@@ -40,3 +40,5 @@ xlabel("Frequency (hz)")
 ylabel("H(f)");
 legend("H(f)");
 title ("Transfer function for comeptition circuit");
+
+exportgraphics(gca, "transferFuncComp.eps", "Resolution", 300);

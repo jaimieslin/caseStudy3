@@ -33,6 +33,7 @@ legend("V_{in}", "V_{out}");
 title({['Voltage over time for ' num2str(f) ' Hz input']; "Circuit C"});
 hold off;
 
+exportgraphics(gca, "circuitC.eps", "Resolution", 300);
 %% Circuit D
 Vout_D = circuitD(Vin, h, R1, R4, C2, C3);
 
@@ -50,6 +51,7 @@ legend("V_{in}", "V_{out}");
 title({['Voltage over time for ' num2str(f) ' Hz input']; "Circuit D"});
 hold off;
 
+exportgraphics(gca, "circuitD.eps", "Resolution", 300);
 %% Setup, compute, and plot transfer functions H(f)
 freq = 10:10:10000; % vector of 1000 frequency values spanning (10 - 10k) hz
 % initialize H_C and H_D
@@ -78,3 +80,5 @@ xlabel("Frequency (hz)")
 ylabel("H(f)");
 legend("H(f)_{C}", "H(f)_{D}");
 title ("Transfer functions for circuit C and D");
+
+exportgraphics(gca, "transferFuncCD.eps", "Resolution", 300);

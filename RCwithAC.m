@@ -45,6 +45,9 @@ hold off;
 % w = waitforbuttonpress;
 % playSound(Vr_out, (1/h));
 end
+
+exportgraphics(gca, "9000HzCircuitAB.eps", "Resolution", 300);
+exportgraphics(gca, "50HzCircuitAB.eps", "Resolution", 300);
 %% Setup, compute, and plot transfer functions H(f)
 freq = 10:10:10000; % vector of 1000 frequency values spanning (10 - 10k) hz
 
@@ -73,3 +76,4 @@ xlabel("Frequency (hz)")
 ylabel("H(f)");
 legend("H(f)_{c}", "H(f)_{r}");
 title ("Transfer function");
+exportgraphics(gca, "transferFuncAB.eps", "Resolution", 300);

@@ -1,5 +1,6 @@
 %% Setup and compute model
 close all;
+
 % constants
 R = 1000; %resitance
 C = 1*10^-6; %capacitance
@@ -45,4 +46,6 @@ xlabel("Time (s)")
 ylabel("Voltage (V)");
 legend("V_{in}", "V_{out}", "V'_{out}", "V_c(t)", "RC time constant",...
     'Location','southeast');
+title("Charging curves for capacitor in circuit A");
 hold off;
+exportgraphics(gca, "chargingCurves.eps", "Resolution", 300);
