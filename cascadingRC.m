@@ -1,22 +1,20 @@
 %% Set up and constants
-% close all;
-% constants
+close all;
+%constants
 C1 = 1*10^-6;
 C2 = 1*10^-6;
 C3 = 1*10^-6;
-
 R1 = 1000;
 R2 = 1000;
 R4 = 1000;
-
 h = 2.61*10^-5; % sampling interval
 
 f = 50; % input frequency
-period = 1/f;
-t = 0:h:(2*period-h); % Range of time is equal to two periods of the input voltage sine wave
-steps = fix(2*period/h); % Number of time points of interest
+period = 1/f; %period of the wave
+t = 0:h:(2*period-h);
+steps = fix(2*period/h); %number of time steps
 
-Vin = sin(2*pi*f*t);
+Vin = sin(2*pi*f*t); %input voltage
 
 %% Circuit C
 Vout_C = circuitC(Vin, h, R2, R4, C1, C3);
@@ -61,7 +59,7 @@ H_D = zeros(1, length(freq));
 % calculate H_C and H_D
 for i = 1:length(freq)
     period = 1/(freq(i));
-    t = 0:h:50*period; % we use 50 periods worth of time to ensure wave stability
+    t = 0:h:75*period;
     vin = sin(2*pi*freq(i)*t);
     vout_C = circuitC(vin, h, R2, R4, C1, C3);
     vout_D = circuitD(vin, h, R1, R4, C2, C3);

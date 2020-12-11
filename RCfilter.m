@@ -10,12 +10,14 @@
 % outputs:
 % Vout - time-series vector representing the output voltage of a circuit
 
-function Vout = RCfilter(Vin,h)
-C2 = 1.2434*10^-4;
-C3 = 1.2434*10^-4;
-
-R1 = 0.4266;
+function Vout = RCfilter(Vin, h)
+%resistance values
+R1 = 10;
 R4 = 16;
+
+% capacitance values based on set resistance values and frequency bounds
+C2 = 68*10^-6; %(1/(2*pi*fRight*R1));
+C3 = 22*10^-6; %(1/(2*pi*fLeft*R4));
 
 Vout = circuitD(Vin, h, R1, R4, C2, C3);
 end
