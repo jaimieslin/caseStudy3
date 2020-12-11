@@ -15,7 +15,7 @@ function Vout = RCfilter(Vin, h)
 R1 = 10;
 R4 = 16;
 
-% capacitance values based on set resistance values and frequency bounds
+% capacitance values based on set resistance values and bounds
 C2 = 68*10^-6; %(1/(2*pi*fRight*R1));
 C3 = 22*10^-6; %(1/(2*pi*fLeft*R4));
 

@@ -6,12 +6,12 @@ R1 = 10;
 R4 = 16;
 
 % left and right frequncy bounds
-fLeft = 450;
-fRight = 150;
+left = 450;
+right = 150;
 
 % capacitance values based on set resistance values and frequency bounds
-C2 = 68*10^-6; %(1/(2*pi*fRight*R1));
-C3 = 22*10^-6; %(1/(2*pi*fLeft*R4));
+C2 = 68*10^-6; %(1/(2*pi*right*R1));
+C3 = 22*10^-6; %(1/(2*pi*left*R4));
 
 h = 2.61*10^-5; % sampling interval
 
@@ -39,6 +39,6 @@ set(gca, 'fontsize', 14);
 xlabel("Frequency (hz)")
 ylabel("H(f)");
 legend("H(f)");
-title ("Transfer function for comeptition circuit");
+title ("Transfer function for competition circuit");
 
 exportgraphics(gca, "transferFuncComp.eps", "Resolution", 300);
